@@ -7,8 +7,12 @@ import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "./separator";
 import { Button } from "./button";
+import useRegisterDialog from "@/hooks/use-register.dialog";
+import useLoginDialog from "@/hooks/use-login.dialog";
 
 const Navbar = () => {
+  const { onOpen: onRegisterOpen } = useRegisterDialog();
+  const { onOpen: onLoginOpen } = useLoginDialog();
   const [searchKeyword, setSearchKeyword] = React.useState("");
   return (
     <header
@@ -60,13 +64,17 @@ const Navbar = () => {
 
         <div className="ml-auto flex items-center space-x-4">
           <div className="flex items-center space-x-2">
-            <button className="text-sm font-extralight text-white">
-              {" "}
+            <button
+              onClick={onLoginOpen}
+              className="text-sm font-extralight text-white"
+            >
               Sign in
             </button>
             <Separator orientation="vertical" className="h-3 text-white" />
-            <button className="text-sm font-extralight text-white">
-              {" "}
+            <button
+              onClick={onRegisterOpen}
+              className="text-sm font-extralight text-white"
+            >
               Registration
             </button>
           </div>

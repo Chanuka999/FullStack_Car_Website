@@ -18,6 +18,7 @@ import {
   CAR_PRICE_RANGE_OPTIONS,
   CAR_YEAR_OPTIONS,
 } from "@/constants/car-options";
+
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -76,6 +77,8 @@ const HeroFilter = () => {
         params.append(key, value);
       }
     });
+    console.log(params);
+
     router.push(`/search?${params.toString()}`);
   };
 

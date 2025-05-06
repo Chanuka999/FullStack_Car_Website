@@ -6,7 +6,7 @@ import HeroFilter from "./_common/hero-filter";
 const HeroSection = () => {
   return (
     <div
-      className="w-full h-[550px] mb-4"
+      className="w-full min-h-[550px] mb-4"
       style={{
         background: `linear-gradient(160.29deg, #00b53f .67%, #00831e 100.93%)`,
       }}
@@ -29,8 +29,8 @@ const HeroSection = () => {
           </Card>
         </div>
 
-        <div className="flex-1 sm:w-[400px] lg:ml-auto">
-          <div className="relative w-[350px] md:w-[500px] lg:w-[700px] mt-5 md:mt-8 lh:mt-0">
+        <div className="flex-1 lg:ml-auto">
+          <div className="relative w-[350px] sm:w-[400px] md:w-[500px] lg:w-[700px] mt-5 md:mt-8 lh:mt-0">
             <Image
               src="/images/hero-car.png"
               alt=""

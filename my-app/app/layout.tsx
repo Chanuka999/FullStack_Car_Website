@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import RegisterDialog from "@/components/ui/auth/RegisterDialog";
+import LoginDialog from "@/components/ui/auth/LoginDialog";
+import QueryProvider from "@/context/query-provider";
 
 export const metadata: Metadata = {
   title: "Auto Hunt",
@@ -16,7 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-[#EBF2F7] antialiased`}>
-        {children} <Toaster />
+        <QueryProvider>
+          <NuqsAdapter>
+            <RegisterDialog />
+            <LoginDialog />
+            {children}
+          </NuqsAdapter>
+          <Toaster />
+        </QueryProvider>
       </body>
     </html>
   );
