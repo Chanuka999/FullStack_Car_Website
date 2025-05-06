@@ -14,8 +14,8 @@ export const signupSchema = object({
   shopName: string().min(2, {
     message: "shop name is required",
   }),
-  password: string().min(1, {
-    message: "password is required",
+  password: string().min(8, {
+    message: "password shoud be at least 8 character",
   }),
 });
 
