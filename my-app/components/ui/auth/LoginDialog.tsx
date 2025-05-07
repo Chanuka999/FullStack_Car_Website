@@ -24,10 +24,20 @@ import { Button } from "../button";
 import useLoginDialog from "@/hooks/use-login.dialog"; // ✅ Correct if it exists
 import useRegisterDialog from "@/hooks/use-register.dialog";
 import { loginSchema } from "@/validation/auth.validation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { loginMutationfn } from "@/lib/fetcher";
+import { toast } from "@/hooks/use-toast";
+import { Loader } from "lucide-react";
 
 const LoginDialog = () => {
   const { open, onClose } = useLoginDialog();
   const { onOpen } = useRegisterDialog();
+
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginMutationfn,
+  });
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -38,7 +48,26 @@ const LoginDialog = () => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
+    mutate(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["currentUser"],
+        });
+        toast({
+          title: "login successfully",
+          description: "you have been loged in successfully",
+          variant: "success",
+        });
+        onClose();
+      },
+      onError: () => {
+        toast({
+          title: "Error occured",
+          description: "Login failed,please try again",
+          variant: "destructive",
+        });
+      },
+    });
   };
 
   const handleRegisterOpen = () => {
@@ -96,7 +125,13 @@ const LoginDialog = () => {
               )}
             />
 
-            <Button size="lg" className="w-full" type="submit">
+            <Button
+              size="lg"
+              disabled={isPending}
+              className="w-full"
+              type="submit"
+            >
+              {isPending && <Loader className="w-4 h-4 animate-spin" />}
               Login
             </Button>
           </form>
