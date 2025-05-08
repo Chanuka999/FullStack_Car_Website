@@ -46,7 +46,7 @@ const CarDrivetrainEnum = createEnum(CAR_DRIVETRAIN_OPTIONS, "drivertrain");
 export const listinSchema = z.object({
   brand: CarBrandEnum,
   model: CarModelEnum,
-  year: CarYearEnum,
+  yearOfManufacture: CarYearEnum,
   exteriorColor: CarColorEnum.optional(),
   condition: CarConditionEnum,
   secondCondition: z.array(CarSecondConditionEnum).optional(),

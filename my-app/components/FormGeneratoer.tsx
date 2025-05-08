@@ -1,6 +1,17 @@
 import { FieldType } from "@/@types/index.types";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { Input } from "./ui/input";
+import { PhoneInput } from "./ui/phone-input";
+import { Textarea } from "./ui/textarea";
+import { Select, Value } from "@radix-ui/react-select";
+import { Vault } from "lucide-react";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import MultipleSelector from "./ui/multi-select";
 
 type FormGeneratorProps = {
   field: FieldType;
@@ -23,7 +34,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
   const { name, fieldType, label, disabled, placeholder, options } = field;
 
   const getSelectedItems = (
-    options: { label: string; value: string }[],
+    options: { key?: string; label: string; value: string }[],
     valueMultiSelect: string[] = []
   ) => {
     return options.filter((option) => valueMultiSelect.includes(option.value));
@@ -102,14 +113,71 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
       )}
 
       {fieldType === "phone" && (
-        <Input
+        <PhoneInput
           id={name}
-          type="number"
-          className="!h-12 shadow-none placeholder:!text-muted-foreground"
+          className="phone-input !h-12"
+          autoComplete="off"
+          disabled={disabled}
+          placeholder={placeholder || label}
+          defaultValue={defaultValue}
+          onChange={(value) => {
+            onChange?.(value);
+          }}
+        />
+      )}
+
+      {fieldType === "textarea" && (
+        <Textarea
+          id={name}
+          className=""
           disabled={disabled}
           placeholder={placeholder || label}
           defaultValue={defaultValue}
           {...register(name)}
+        />
+      )}
+
+      {fieldType === "textarea" && (
+        <Select
+          value={formvalue || ""}
+          onValueChange={(value) => onChange?.(value)}
+          disabled={disabled || options?.length === 0}
+        >
+          <SelectTrigger className="w-full !h-12 shadow-none data-[placeholder]:text-muted-foreground">
+            <SelectValue placeholder={placeholder || `Select ${label}`} />
+          </SelectTrigger>
+          <SelectContent>
+            {options?.length === 0 && (
+              <p className="text-center text-sm text-muted-foreground leading-10">
+                No options found
+              </p>
+            )}
+            {options?.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+
+      {fieldType === "multiselect" && options && (
+        <MultipleSelector
+          options={options}
+          placeholder={placeholder || "Select ${label"}
+          disabled={disabled}
+          className="w-full !min-h-12 max-h-auto shadow-none"
+          badgeClassName="bg-primary/10 shadow-none text-black !font-medium"
+          value={getSelectedItems(options, valueMultiSelect) || []}
+          onChange={(selectedItems) => {
+            const selectedValues = selectedItems.map((item) => item.value);
+            onChange?.(selectedValues);
+          }}
+          emptyIndicator={
+            <p className="text-center text-sm text-muted-foreground leading-10">
+              No options found
+            </p>
+          }
         />
       )}
     </div>
