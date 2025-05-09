@@ -41,7 +41,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
 
   return (
     <div className="grid gap-2">
-      {label && <label htmlFor={name}>{label}</label>}
+      {!label && <label htmlFor={name}>{label}</label>}
 
       {fieldType === "text" && (
         <Input
@@ -59,7 +59,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
         <Input
           id={name}
           type="number"
-          className="!h-12 shadow-none placeholder:!text-muted-foreground"
+          className="!h-12 text-sm shadow-none placeholder:!text-muted-foreground"
           disabled={disabled}
           placeholder={placeholder || label}
           defaultValue={defaultValue}
@@ -75,7 +75,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
           <Input
             id={name}
             type="text"
-            className="!h-12 shadow-none placeholder:!text-muted-foreground pl-9"
+            className="!h-12 text-sm shadow-none placeholder:!text-muted-foreground pl-9"
             disabled={disabled}
             placeholder={placeholder || label}
             defaultValue={defaultValue}
@@ -102,7 +102,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
       {fieldType === "phone" && (
         <PhoneInput
           id={name}
-          className="phone-input !h-12"
+          className="phone-input !h-12 text-sm"
           autoComplete="off"
           disabled={disabled}
           placeholder={placeholder || label}
@@ -114,7 +114,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
       {fieldType === "textarea" && (
         <Textarea
           id={name}
-          className="!h-24"
+          className="text-sm"
           disabled={disabled}
           placeholder={placeholder || label}
           defaultValue={defaultValue}
@@ -151,7 +151,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
           options={options}
           placeholder={placeholder || `Select ${label}`}
           disabled={disabled}
-          className="w-full !min-h-12 shadow-none"
+          className="w-full text-sm !min-h-12 shadow-none"
           badgeClassName="bg-primary/10 shadow-none text-black !font-medium"
           value={getSelectedItems(options, valueMultiSelect)}
           onChange={(selectedItems) => {

@@ -21,6 +21,7 @@ body {
   }
   input {
     height: 100% !important;
+    font-size: 14px !important;
   }
 }
 .sendbird-ui-header__right {
