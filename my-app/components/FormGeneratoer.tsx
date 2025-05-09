@@ -3,9 +3,8 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { Input } from "./ui/input";
 import { PhoneInput } from "./ui/phone-input";
 import { Textarea } from "./ui/textarea";
-import { Select, Value } from "@radix-ui/react-select";
-import { Vault } from "lucide-react";
 import {
+  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -39,25 +38,16 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
   ) => {
     return options.filter((option) => valueMultiSelect.includes(option.value));
   };
+
   return (
     <div className="grid gap-2">
       {label && <label htmlFor={name}>{label}</label>}
+
       {fieldType === "text" && (
         <Input
           id={name}
           type="text"
           className="!h-12 shadow-none"
-          disabled={disabled}
-          placeholder={placeholder || label}
-          defaultValue={defaultValue}
-          {...register(name)}
-        />
-      )}
-      {fieldType === "number" && (
-        <Input
-          id={name}
-          type="number"
-          className="!h-12 shadow-none placeholder:!text-muted-foreground"
           disabled={disabled}
           placeholder={placeholder || label}
           defaultValue={defaultValue}
@@ -89,12 +79,9 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
             disabled={disabled}
             placeholder={placeholder || label}
             defaultValue={defaultValue}
-            {...(register(name),
-            {
+            {...register(name, {
               onChange: (e) => {
-                const rawValue = e.target.value
-                  ? e.target.value.replace(/\D/g, "")
-                  : "";
+                const rawValue = e.target.value.replace(/\D/g, "");
                 const formattedValue = rawValue
                   ? new Intl.NumberFormat().format(Number(rawValue))
                   : "";
@@ -102,8 +89,8 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
               },
               setValueAs: (value) => {
                 if (typeof value === "string" || typeof value === "number") {
-                  const cleanedValue = String(value).replace(/\D/g, "");
-                  return cleanedValue ? Number(cleanedValue) : null;
+                  const cleaned = String(value).replace(/\D/g, "");
+                  return cleaned ? Number(cleaned) : null;
                 }
                 return null;
               },
@@ -120,16 +107,14 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
           disabled={disabled}
           placeholder={placeholder || label}
           defaultValue={defaultValue}
-          onChange={(value) => {
-            onChange?.(value);
-          }}
+          onChange={(value) => onChange?.(value)}
         />
       )}
 
       {fieldType === "textarea" && (
         <Textarea
           id={name}
-          className=""
+          className="!h-24"
           disabled={disabled}
           placeholder={placeholder || label}
           defaultValue={defaultValue}
@@ -137,7 +122,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
         />
       )}
 
-      {fieldType === "textarea" && (
+      {fieldType === "select" && (
         <Select
           value={formvalue || ""}
           onValueChange={(value) => onChange?.(value)}
@@ -164,11 +149,11 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
       {fieldType === "multiselect" && options && (
         <MultipleSelector
           options={options}
-          placeholder={placeholder || "Select ${label"}
+          placeholder={placeholder || `Select ${label}`}
           disabled={disabled}
-          className="w-full !min-h-12 max-h-auto shadow-none"
+          className="w-full !min-h-12 shadow-none"
           badgeClassName="bg-primary/10 shadow-none text-black !font-medium"
-          value={getSelectedItems(options, valueMultiSelect) || []}
+          value={getSelectedItems(options, valueMultiSelect)}
           onChange={(selectedItems) => {
             const selectedValues = selectedItems.map((item) => item.value);
             onChange?.(selectedValues);
