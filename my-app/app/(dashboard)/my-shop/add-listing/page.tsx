@@ -5,17 +5,36 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { ScrollBar } from "@/components/ui/scroll-area";
+import {
+  CAR_BRAND_OPTIONS,
+  CAR_MODEL_OPTIONS,
+  CAR_YEAR_OPTIONS,
+} from "@/constants/car-options";
 import { addListingFields } from "@/constants/listing-fields";
+import useCurentUser from "@/hooks/api/use-curreent.user";
+import { toast } from "@/hooks/use-toast";
+import { addListingMutationFn } from "@/lib/fetcher";
 import { listinSchema } from "@/validation/listing.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@radix-ui/react-label";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { X } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { Loader, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { title } from "process";
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { z } from "zod";
+import { string, z } from "zod";
 
 const AddListing = () => {
+  const router = useRouter();
+  const { data } = useCurentUser();
+  const shop = data?.shop;
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: addListingMutationFn,
+  });
   const listingClientSchema = listinSchema.extend({
     contactPhone: z
       .string({
@@ -39,12 +58,14 @@ const AddListing = () => {
       mileage: "",
       transmition: "",
       fuelType: "",
+      keyFeatures: [],
       vin: "",
       bodyType: "",
       drivertrain: "",
       seatingCapacity: "",
       description: "",
       peice: 0,
+      contactPhone: "",
       imageUrls: [],
     },
   });
@@ -68,8 +89,51 @@ const AddListing = () => {
     form.setValue("imageUrls", updatedImageUrls);
   };
 
+  const getLabel = (
+    value: string,
+    options: { value: string; label: string }[]
+  ) => {
+    const option = options.find((opt) => opt.value === value);
+    return option ? option.label : value;
+  };
+
   function onSubmit(values: FormDataType) {
-    console.log(values);
+    const { brand, model, condition, yearOfManufacture, exteriorColor } =
+      values;
+    const displayTitle = [
+      condition === "BRAND_NEW" ? "NEW" : null,
+      getLabel(brand, CAR_BRAND_OPTIONS),
+      getLabel(model, CAR_MODEL_OPTIONS),
+      getLabel(yearOfManufacture, CAR_YEAR_OPTIONS),
+      // exteriorColor !== "other"
+      //   ? getLabel(exteriorColor, CAR_YEAR_OPTIONS)
+      //   : null,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    const payload = {
+      ...values,
+      displayTitle,
+      shopId: shop?.$id,
+    };
+    mutate(payload, {
+      onSuccess: () => {
+        toast({
+          title: "Listing added successfully",
+          description: "Your listing is now live on the platform",
+          variant: "success",
+        });
+        router.push("/my-shop");
+      },
+      onError: (error) => {
+        toast({
+          title: "Something went wrong",
+          description: error.message,
+          variant: "destructive",
+        });
+      },
+    });
   }
   return (
     <main className="container mx-auto px-4 pt-3 pb-8">
@@ -138,7 +202,7 @@ const AddListing = () => {
                           key={index}
                           control={form.control}
                           name={field.name as FormFieldName}
-                          disabled={field.disabled}
+                          disabled={field.disabled || isPending}
                           render={({ field: formField }) => {
                             const filteredModels =
                               field.name === "model" && brand
@@ -185,8 +249,9 @@ const AddListing = () => {
                       type="submit"
                       size="lg"
                       className="mt-6 py-6 mb-4 w-full max-w-xs flex place-items-center justify-self-center"
-                      disabled={false}
+                      disabled={isPending}
                     >
+                      {isPending && <Loader className="w-4 h-4 animate-spin" />}
                       Post listing
                     </Button>
                   </form>
