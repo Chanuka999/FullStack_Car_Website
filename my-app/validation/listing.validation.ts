@@ -43,27 +43,28 @@ const CarKeyFeacturesEnum = createEnum(CAR_KEY_FEATURES_OPTIONS, "keyFeatures");
 const CarBodyTypeEnum = createEnum(CAR_BODY_TYPE_OPTIONS, "bodyType");
 const CarDrivetrainEnum = createEnum(CAR_DRIVETRAIN_OPTIONS, "drivertrain");
 
-export const listinSchema = z.object({
+export const listingSchema = z.object({
   brand: CarBrandEnum,
   model: CarModelEnum,
   yearOfManufacture: CarYearEnum,
-  exteriorColor: CarColorEnum.optional(),
+  exteriorColor: CarColorEnum,
+  interiorColor: CarColorEnum.optional(),
   condition: CarConditionEnum,
   secondCondition: z.array(CarSecondConditionEnum).optional(),
   mileage: z.string().optional(),
-  transmition: CarTransmitionEnum,
+  transmission: CarTransmitionEnum,
   fuelType: CarFuelTypeEnum,
   keyFeatures: z.array(CarKeyFeacturesEnum).optional(),
   vin: z.string().optional(),
   bodyType: CarBodyTypeEnum,
-  drivertrain: CarDrivetrainEnum,
+  drivetrain: CarDrivetrainEnum,
   seatingCapacity: z.string().optional(),
   description: z.string().optional(),
-  peice: z.number().min(1, "price is required"),
+  price: z.number().min(1, "Price is required"),
   imageUrls: z.array(z.string()).min(3, "At least 3 images required"),
 });
 
-export const listingBackendSchema = listinSchema.extend({
+export const listingBackendSchema = listingSchema.extend({
   shopId: z
     .string({
       required_error: "shop ID is required",

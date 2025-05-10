@@ -16,7 +16,7 @@ type FormGeneratorProps = {
   field: FieldType;
   register: UseFormRegister<any>;
   errors: FieldErrors<FieldValues>;
-  formvalue?: any;
+  formValue?: any;
   onChange?: (value: any) => void;
   defaultValue?: any;
   valueMultiSelect?: string[];
@@ -25,7 +25,7 @@ type FormGeneratorProps = {
 const FormGenerator: React.FC<FormGeneratorProps> = ({
   field,
   register,
-  formvalue,
+  formValue,
   onChange,
   defaultValue,
   valueMultiSelect,
@@ -124,7 +124,7 @@ const FormGenerator: React.FC<FormGeneratorProps> = ({
 
       {fieldType === "select" && (
         <Select
-          value={formvalue || ""}
+          value={formValue || ""}
           onValueChange={(value) => onChange?.(value)}
           disabled={disabled || options?.length === 0}
         >

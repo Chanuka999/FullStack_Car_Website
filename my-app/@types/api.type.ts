@@ -35,7 +35,7 @@ export type ListingType = {
   drivetrain: string;
   seatingCapacity?: string;
   description?: string;
-  peice: number;
+  price: number;
   contactPhone: string;
   imageUrls: string[];
   displayTitle: string;

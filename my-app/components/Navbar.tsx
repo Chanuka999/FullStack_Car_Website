@@ -9,7 +9,7 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import useRegisterDialog from "@/hooks/use-register.dialog";
 import useLoginDialog from "@/hooks/use-login.dialog";
-import useCurrentUser from "@/hooks/api/use-curreent.user"; // ✅ Fixed typo
+import useCurrentUser from "@/hooks/api/use-current.user"; // ✅ Fixed typo
 import { usePathname, useRouter } from "next/navigation";
 
 import {

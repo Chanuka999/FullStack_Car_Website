@@ -1,7 +1,7 @@
 import { getCurrentUserQueryFn } from "@/lib/fetcher";
 import { useQuery } from "@tanstack/react-query";
 
-const useCurentUser = () => {
+const useCurrentUser = () => {
   return useQuery({
     queryKey: ["currentUser"],
     queryFn: getCurrentUserQueryFn,
@@ -9,4 +9,4 @@ const useCurentUser = () => {
   });
 };
 
-export default useCurentUser;
+export default useCurrentUser;
