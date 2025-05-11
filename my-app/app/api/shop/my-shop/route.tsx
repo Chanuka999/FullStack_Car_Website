@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const shops = await databases.listDocuments(
       APP_CONFIG.APPWRITE.DATABASE_ID,
       APP_CONFIG.APPWRITE.SHOP_ID,
-      [Query.equal("userId", user.$id)]
+      [Query.equal("userid", user.$id)]
     );
     const shop = shops?.documents?.[0] || null;
     if (!shop) {
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     const listings = await databases.listDocuments(
       APP_CONFIG.APPWRITE.DATABASE_ID,
       APP_CONFIG.APPWRITE.CAR_LISTING_ID,
-      [Query.equal("userId", user.$id), Query.equal("shop", shop.$id)]
+      [Query.equal("userid", user.$id), Query.equal("shop", shop.$id)]
     );
 
     return NextResponse.json({
