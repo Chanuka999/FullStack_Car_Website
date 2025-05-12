@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useCallback } from "react";
 import Logo from "./ui/logo";
 import { Input } from "./ui/input";
@@ -9,22 +8,21 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import useRegisterDialog from "@/hooks/use-register.dialog";
 import useLoginDialog from "@/hooks/use-login.dialog";
-import useCurrentUser from "@/hooks/api/use-current.user"; // ✅ Fixed typo
+import useCurrentUser from "@/hooks/api/use-current.user";
 import { usePathname, useRouter } from "next/navigation";
-
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"; // ✅ Make sure this is from your UI library
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { logoutMutationfn } from "@/lib/fetcher";
+import { logoutMutationFn } from "@/lib/fetcher";
 import { toast } from "@/hooks/use-toast";
 
-const Navbar = () => {
+const NavBar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { onOpen: onRegisterOpen } = useRegisterDialog();
@@ -37,18 +35,19 @@ const Navbar = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: logoutMutationfn,
+    mutationFn: logoutMutationFn,
     onSuccess: () => {
       queryClient.setQueryData(["currentUser"], null);
-      queryClient.refetchQueries({
+
+      queryClient.invalidateQueries({
         queryKey: ["currentUser"],
       });
       router.push("/");
     },
     onError: () => {
       toast({
-        title: "logout failed",
-        description: "please try again",
+        title: "Logout Failed",
+        description: "Please try again.",
       });
     },
   });
@@ -70,27 +69,48 @@ const Navbar = () => {
 
   return (
     <header
-      className="w-full px-3 md:px-0 bg-primary sticky top-0 z-10 h-14"
-      style={{ boxShadow: "1px 1px 4px #50727d66" }}
+      className="w-full px-3 md:px-0 bg-gradient-to-r from-purple-500 to-purple-800
+        sticky top-0 align-top z-10 h-14
+        "
+      style={{
+        boxShadow: "1px 1px 4px #50727d66",
+      }}
     >
-      <nav className="flex items-center h-full max-w-7xl mx-auto">
+      <nav
+        className="
+          flex items-center h-full w-full max-w-7xl mx-auto"
+      >
         <Logo />
-        <ul className="hidden lg:flex flex-1 items-center justify-center mx-9 text-white/80 space-x-6">
+
+        <ul
+          className="hidden lg:flex flex-1 items-center 
+          justify-start mx-9 text-white/80 space-x-6
+        "
+        >
           <li className="flex-[0.6] hidden md:flex">
-            {hideSearchPathname.includes(pathname) && (
-              <div className="w-full max-w-[320px] h-10 bg-white rounded-lg relative">
+            {!hideSearchPathname.includes(pathname) && (
+              <div
+                className="w-full max-w-[320px] h-10
+            bg-white rounded-lg relative
+              "
+              >
                 <form>
-                  <div className="flex items-center justify-between">
+                  <div
+                    className="flex items-center 
+                justify-between"
+                  >
                     <Input
                       type="search"
                       name="keyword"
                       autoComplete="off"
-                      placeholder="type your search here"
-                      className="flex-1 !shadow-none h-10 text-black !ring-0 !border-0"
+                      placeholder="Type your search here"
+                      className="flex-1 !shadow-none h-10 
+                    text-black !ring-0 !border-0
+                                      "
                       value={searchKeyword}
                       onChange={(e) => setSearchKeyword(e.target.value)}
                     />
-                    <Search className="w-5 h-5 text-gray-600 mr-2" />
+                    <Search className="w-5 h-5 mr-2 text-gray-600" />
                   </div>
                 </form>
               </div>
@@ -118,13 +138,16 @@ const Navbar = () => {
           )}
         </ul>
 
-        <div className="ml-auto flex items-center space-x-4">
+        <div
+          className="
+              ml-auto flex items-center space-x-4 shrink-0
+              "
+        >
           {isLoading || isPending ? (
             <Loader className="w-5 h-5 animate-spin text-white" />
           ) : !user ? (
             <div className="flex items-center space-x-2">
               <button
-                type="button"
                 onClick={onLoginOpen}
                 className="text-sm font-extralight text-white"
               >
@@ -132,7 +155,6 @@ const Navbar = () => {
               </button>
               <Separator orientation="vertical" className="h-3 text-white" />
               <button
-                type="button"
                 onClick={onRegisterOpen}
                 className="text-sm font-extralight text-white"
               >
@@ -143,8 +165,9 @@ const Navbar = () => {
             <div className="flex items-center space-x-2">
               <Button
                 size="icon"
-                type="button"
-                className="rounded-full shadow-sm !py-0 !bg-white !text-black"
+                className="rounded-full shadow-sm !py-0
+                  !bg-white !text-black
+                    "
               >
                 <MessageSquareText />
               </Button>
@@ -153,8 +176,8 @@ const Navbar = () => {
                 <DropdownMenuTrigger asChild>
                   <Avatar role="button" className="h-9 w-9 shadow-sm">
                     <AvatarFallback className="text-sm uppercase">
-                      {user?.name?.charAt(0)}
-                      {user?.name?.charAt(1)}
+                      {user?.name.charAt(0)}
+                      {user?.name.charAt(1)}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
@@ -180,8 +203,9 @@ const Navbar = () => {
 
           <Button
             size="default"
-            type="button"
-            className="!bg-[#fea03c] !px-5 !h-10"
+            className="!bg-[#fea03c]
+        !px-5 !h-10
+        "
             onClick={handleSell}
           >
             <Plus />
@@ -193,4 +217,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;

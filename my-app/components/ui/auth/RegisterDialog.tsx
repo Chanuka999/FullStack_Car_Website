@@ -25,7 +25,7 @@ import { Button } from "../button";
 import useRegisterDialog from "@/hooks/use-register.dialog";
 import useLoginDialog from "@/hooks/use-login.dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { registerMutationfn } from "@/lib/fetcher";
+import { registerMutationFn } from "@/lib/fetcher";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
 
@@ -36,7 +36,7 @@ const RegisterDialog = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: registerMutationfn,
+    mutationFn: registerMutationFn,
   });
 
   const form = useForm<z.infer<typeof signupSchema>>({

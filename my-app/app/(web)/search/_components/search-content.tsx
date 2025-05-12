@@ -6,7 +6,7 @@ import Filters from "./filters";
 import AllListings from "./all-listing";
 import { useQuery } from "@tanstack/react-query";
 import useFilter from "@/hooks/use-filter";
-import { getAllCarListinQueryFn } from "@/lib/fetcher";
+import { getAllCarListingQueryFn } from "@/lib/fetcher";
 
 const SearchContent = () => {
   const { filters } = useFilter();
@@ -26,7 +26,7 @@ const SearchContent = () => {
       filters.condition,
     ],
     queryFn: () =>
-      getAllCarListinQueryFn({
+      getAllCarListingQueryFn({
         brand: filters.brand,
         model: filters.model,
         color: filters.color,

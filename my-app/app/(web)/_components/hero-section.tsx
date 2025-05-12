@@ -8,7 +8,7 @@ const HeroSection = () => {
     <div
       className="w-full min-h-[550px] mb-4"
       style={{
-        background: `linear-gradient(160.29deg, #00b53f .67%, #00831e 100.93%)`,
+        background: `linear-gradient(160.29deg, #8e2de2 0.67%, #4a00e0 100.93%)`,
       }}
     >
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 py-8 lg:py-16">

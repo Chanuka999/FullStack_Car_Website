@@ -6,13 +6,13 @@ import {
   RegisterType,
 } from "@/@types/api.type";
 
-export const registerMutationfn = async (data: RegisterType) =>
+export const registerMutationFn = async (data: RegisterType) =>
   await axios.post("/api/register", data);
 
-export const loginMutationfn = async (data: LoginType) =>
+export const loginMutationFn = async (data: LoginType) =>
   await axios.post("/api/login", data);
 
-export const logoutMutationfn = async () => await axios.post("/api/logout");
+export const logoutMutationFn = async () => await axios.post("/api/logout");
 
 export const getCurrentUserQueryFn = async () => {
   const response = await axios.get("/api/current-user");
@@ -22,7 +22,7 @@ export const getCurrentUserQueryFn = async () => {
 export const addListingMutationFn = async (data: ListingType) =>
   await axios.post("/api/add-listing", data);
 
-export const getAllCarListinQueryFn = async ({
+export const getAllCarListingQueryFn = async ({
   brand,
   model,
   color,
@@ -53,8 +53,21 @@ export const getAllCarListinQueryFn = async ({
   const response = await axios.get(url);
   return response.data;
 };
-
+// Get MyShop and Listing
 export const getMyShopQueryFn = async () => {
   const response = await axios.get("/api/shop/my-shop");
+  return response.data;
+};
+
+//get single listing
+export const getSingleListingQueryFn = async (listingid: string) => {
+  const response = await axios.get(`/api/listing/${listingid}`);
+  return response.data;
+};
+
+// Get Shop by shopId
+export const getShopByIdQueryFn = async (shopId: string) => {
+  console.log(shopId);
+  const response = await axios.get(`/api/shop/${shopId}`);
   return response.data;
 };

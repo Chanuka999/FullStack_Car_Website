@@ -139,7 +139,7 @@ const HeroFilter = () => {
       </div>
 
       <Button
-        className="w-full lg:w-11/12 mx-auto flex items-center justify-between py-6"
+        className="w-full lg:w-11/12 mx-auto flex items-center justify-between py-6 bg-gradient-to-r from-purple-500 to-purple-800"
         onClick={handleSearch}
       >
         <span className="flex items-center gap-1 font-light">
@@ -154,7 +154,10 @@ const HeroFilter = () => {
 
       <p className="text-muted-foreground text-sm text-center">
         Want to search more customized
-        <Link href="/search" className="text-primary underline font-bold ml-2">
+        <Link
+          href="/search"
+          className="text-primary underline font-bold ml-2 text-purple-700"
+        >
           Advanced search
         </Link>
       </p>

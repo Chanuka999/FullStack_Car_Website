@@ -25,7 +25,7 @@ import useLoginDialog from "@/hooks/use-login.dialog"; // ✅ Correct if it exis
 import useRegisterDialog from "@/hooks/use-register.dialog";
 import { loginSchema } from "@/validation/auth.validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { loginMutationfn } from "@/lib/fetcher";
+import { loginMutationFn } from "@/lib/fetcher";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
 
@@ -36,7 +36,7 @@ const LoginDialog = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: loginMutationfn,
+    mutationFn: loginMutationFn,
   });
 
   const form = useForm<z.infer<typeof loginSchema>>({
