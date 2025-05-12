@@ -8,6 +8,9 @@ export const CAR_BRAND_OPTIONS = [
   { value: "tata", label: "Tata" },
   { value: "audi", label: "Audi" },
   { value: "hyundai", label: "Hyundai" },
+  { value: "lambogini", label: "lambogini" },
+  { value: "ducati", label: "ducati" },
+  { value: "ferari", label: "ferari" },
 ];
 
 export const CAR_MODEL_OPTIONS = [
@@ -50,7 +53,26 @@ export const CAR_MODEL_OPTIONS = [
   { key: "hyundai", value: "loniq 5", label: "loniq 5" },
   { key: "hyundai", value: "loniq 6", label: "loniq 6" },
   { key: "hyundai", value: "tucson", label: "tucson" },
-  { key: "hyundai", value: "l20", label: "l20" },
+  { key: "lambogini", value: "lambogini urus", label: "lambogini urus" },
+  {
+    key: "lambogini",
+    value: "lambogini countach",
+    label: "lambogini countach",
+  },
+  {
+    key: "lambogini",
+    value: "lambogini aventador",
+    label: "lambogini aventador",
+  },
+  { key: "lambogini", value: "huracan", label: "huracan" },
+  {
+    key: "lambogini",
+    value: "lambogini revuelto",
+    label: "lambogini revuelto",
+  },
+  { key: "ferari", value: "296 gtb", label: "296 gtb" },
+  { key: "ferari", value: "ferari sf90", label: "ferari sf90" },
+  { key: "ferari", value: "ferari roma", label: "ferari roma" },
 ];
 
 export const CAR_BODY_TYPE_OPTIONS = [
@@ -124,6 +146,10 @@ export const CAR_COLOR_OPTIONS = [
   {
     value: "red",
     label: "Red",
+  },
+  {
+    value: "orange",
+    label: "orange",
   },
   {
     value: "blue",
