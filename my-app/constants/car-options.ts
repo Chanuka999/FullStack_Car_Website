@@ -9,7 +9,7 @@ export const CAR_BRAND_OPTIONS = [
   { value: "audi", label: "Audi" },
   { value: "hyundai", label: "Hyundai" },
   { value: "lambogini", label: "lambogini" },
-  { value: "ducati", label: "ducati" },
+  { value: "bugati", label: "bugati" },
   { value: "ferari", label: "ferari" },
 ];
 
@@ -73,6 +73,10 @@ export const CAR_MODEL_OPTIONS = [
   { key: "ferari", value: "296 gtb", label: "296 gtb" },
   { key: "ferari", value: "ferari sf90", label: "ferari sf90" },
   { key: "ferari", value: "ferari roma", label: "ferari roma" },
+  { key: "bugati", value: "bugati veyron", label: "bugati veyron" },
+  { key: "bugati", value: "bugati chiron", label: "bugati chiron" },
+  { key: "bugati", value: "bugati noire", label: "bugati noire" },
+  { key: "bugati", value: "bugati divo", label: "bugati divo" },
 ];
 
 export const CAR_BODY_TYPE_OPTIONS = [
