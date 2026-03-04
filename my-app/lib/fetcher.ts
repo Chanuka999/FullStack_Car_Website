@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   AllCarListingPayloadType,
+  BookingType,
   ListingType,
   LoginType,
   RegisterType,
@@ -70,4 +71,9 @@ export const getShopByIdQueryFn = async (shopId: string) => {
   console.log(shopId);
   const response = await axios.get(`/api/shop/${shopId}`);
   return response.data;
+};
+
+export const getBookingsQueryFn = async () => {
+  const response = await axios.get("/api/booking");
+  return response.data as { bookings: BookingType[] };
 };
