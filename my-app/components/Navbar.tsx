@@ -188,6 +188,12 @@ const NavBar = () => {
                   >
                     My Shop
                   </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/my-shop/bookings")}
+                    className="!cursor-pointer"
+                  >
+                    My Bookings
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={handleLogout}
