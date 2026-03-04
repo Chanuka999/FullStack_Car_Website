@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import "./globals.css";
@@ -21,11 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-[#EBF2F7] antialiased`}>
         <QueryProvider>
-          <NuqsAdapter>
-            <RegisterDialog />
-            <LoginDialog />
-            {children}
-          </NuqsAdapter>
+          <Suspense fallback={null}>
+            <NuqsAdapter>
+              <RegisterDialog />
+              <LoginDialog />
+              {children}
+            </NuqsAdapter>
+          </Suspense>
           <Toaster />
         </QueryProvider>
       </body>
