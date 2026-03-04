@@ -53,3 +53,19 @@ export type AllCarListingPayloadType = {
   year_max?: number;
   fuelType?: string[];
 };
+
+export type BookingType = {
+  $id?: string;
+  carId: string;
+  listingId: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  userPhone: string;
+  bookingDate: string;
+  bookingTime: string;
+  message?: string;
+  status: string;
+  createdAt?: string;
+  listing?: ListingType;
+};

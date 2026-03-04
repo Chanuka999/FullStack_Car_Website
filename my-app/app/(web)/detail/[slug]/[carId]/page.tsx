@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { ListingType } from "@/@types/api.type";
 import NavBreadCrumb from "@/components/NavBreadCrumb";
 import { getSingleListingQueryFn } from "@/lib/fetcher";
@@ -13,12 +13,12 @@ import ShopInfo from "../../_components/shop-info";
 const CarDetail = ({
   params,
 }: {
-  params: {
+  params: Promise<{
     slug: string;
     carId: string;
-  };
+  }>;
 }) => {
-  const { slug, carId } = params;
+  const { slug, carId } = use(params);
   const carName = slugToCarName(slug);
 
   const { data, isPending, isError } = useQuery({
@@ -69,6 +69,8 @@ const CarDetail = ({
                 shopName={listing?.shop?.shopName || ""}
                 shopOwnerUserId={listing?.shop?.userid || ""}
                 isPending={isPending || isError}
+                carSlug={slug}
+                carId={carId}
               />
             </div>
           </div>
