@@ -3,6 +3,7 @@ import Link from "next/link";
 import { UserIcon } from "lucide-react";
 //import ChatSellerButton from "@/components/ChatSellerButton";
 import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatCurrency } from "@/lib/helper";
@@ -15,6 +16,8 @@ interface PropsType {
   displayTitle: string;
   shopOwnerUserId: string;
   isPending: boolean;
+  carSlug?: string;
+  carId?: string;
 }
 const ShopInfo = ({
   price,
@@ -23,6 +26,8 @@ const ShopInfo = ({
   isPending,
   displayTitle,
   shopOwnerUserId,
+  carSlug,
+  carId,
 }: PropsType) => {
   return (
     <div className="w-full">
@@ -106,6 +111,18 @@ const ShopInfo = ({
                   shopOwnerUserId={shopOwnerUserId}
                 />
               </div> */}
+
+              {/* Book Now Button */}
+              {carSlug && carId && (
+                <Link
+                  href={`/detail/${carSlug}/${carId}/booking`}
+                  className="w-full mt-4"
+                >
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
+                    Book Now
+                  </Button>
+                </Link>
+              )}
             </CardContent>
           </Card>
 
